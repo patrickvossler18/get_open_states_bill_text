@@ -1,4 +1,3 @@
-import re
 import csv
 import os
 import re
@@ -24,7 +23,6 @@ from p_tqdm import p_map
 # which case I can slightly modify the code below by just concatenating the search terms into one long regular
 # expression and just compile it once. Ideally this will be faster than looping through all of the search terms.
 
-# TODO: modify the code to allow for list of search terms to be made into one regex expression
 
 tokens = {
     'criminal justice' : ['criminal justice reform','juvenile justice reform', 'criminal justice'],
@@ -102,10 +100,8 @@ def find_tokens(macro_re, s):
         # found.append([(t, v) for t, v in match.groupdict().items() if v is not None][0])
     return found
 
-
 compiled_regex = create_macro_re(tokens)
 RESULTS_FILE_NAME = "/home/ubuntu/Downloads/search_dictionary_results_1_10_20.csv"
-
 
 def pdfparser(file):
     if "/de/" not in file:
@@ -182,7 +178,7 @@ def check_text(file):
         text = pre_process(text)
         results = find_tokens(compiled_regex,text)
         if len(results) > 0:
-            print(file)
+            # print(file)
             # get the uuid
             uuid = os.path.splitext(os.path.basename(file))[0]
 
@@ -225,6 +221,7 @@ if __name__ == '__main__':
     immigrant_states = ["ca", "il", "tx", "mi", "ma", "or", "nm", "ny", "ks", "wi", "md", "wy", "fl", "wa", "pa", "az",
                         "nj", "ut", "ct", "nv", "co", "ri", "in", "ga", "nh", "oh", "mo", "va","hi", "me", "vt", "de",
                         'nc', "ak", "sd", "ms", "tn", "ok", "wv", "mn", "ar", "ky", "ne", "la"]
+    print('getting file paths')
     for dirpath, dirnames, filenames in os.walk(root_path):
         for filename in [f for f in filenames if f.endswith(".pdf") or f.endswith(".txt") or f.endswith(".doc") or f.endswith(".html")]:
             # we don't want pdfs from Delaware AND we don't want it if we've already processed it
