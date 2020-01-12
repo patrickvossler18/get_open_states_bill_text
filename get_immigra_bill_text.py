@@ -69,7 +69,7 @@ def create_macro_re(tokens, flags=0):
     """
     d = {}
     for token, vals in tokens.items():
-        token = token.replace(" ", "").replace("'","").replace("/","")
+        token = token.replace(" ", "").replace("'", "").replace("/", "")
         d[token] = '(?P<{}>{})'.format(token, '|'.join(vals))
     combined = '|'.join(d.values())
     return re.compile(combined, flags)
@@ -100,8 +100,10 @@ def find_tokens(macro_re, s):
         # found.append([(t, v) for t, v in match.groupdict().items() if v is not None][0])
     return found
 
+
 compiled_regex = create_macro_re(tokens)
-RESULTS_FILE_NAME = "/home/ubuntu/Downloads/search_dictionary_results_1_10_20.csv"
+RESULTS_FILE_NAME = "/home/ubuntu/Downloads/search_dictionary_results_1_11_20.csv"
+
 
 def pdfparser(file):
     if "/de/" not in file:
@@ -201,9 +203,9 @@ def pre_process(text):
     # lowercase
     text = text.lower()
     #remove tags
-    text = re.sub("</?.*?>"," <> ",text)
+    text = re.sub("</?.*?>","",text)
     # remove special characters and digits
-    text = re.sub("(\\d|\\W)+"," ",text)
+    # text = re.sub("(\\d|\\W)+"," ",text)
     return text
 
 
