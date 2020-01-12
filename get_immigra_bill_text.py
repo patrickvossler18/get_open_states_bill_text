@@ -102,7 +102,7 @@ def find_tokens(macro_re, s):
 
 
 compiled_regex = create_macro_re(tokens)
-RESULTS_FILE_NAME = "/home/ubuntu/Downloads/search_dictionary_results_1_11_20.csv"
+RESULTS_FILE_NAME = "/home/ubuntu/Downloads/search_dictionary_results_1_12_20.csv"
 
 
 def pdfparser(file):
@@ -183,6 +183,9 @@ def check_text(file):
             # print(file)
             # get the uuid
             uuid = os.path.splitext(os.path.basename(file))[0]
+            if 'missing_legislators' in file:
+                folder_name = os.path.basename(os.path.dirname(file))
+                uuid = folder_name+ "_" + uuid.strip(" ")
 
             # result = os.path.splitext(os.path.basename(file))[0]
             # with open(RESULTS_FILE_NAME, 'a+') as csv_file:
@@ -237,6 +240,8 @@ if __name__ == '__main__':
     # pool = Pool(processes=3)
     # match_results = list(pool.map(check_text, all_files))
     match_results = list(p_map(check_text, all_files))
+
+    # the missing data files are a bit more complicated
 
     with open(RESULTS_FILE_NAME, 'a+') as csv_file:
         writer = csv.writer(csv_file, delimiter=',')
