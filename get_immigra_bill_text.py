@@ -231,7 +231,7 @@ if __name__ == '__main__':
         for filename in [f for f in filenames if f.endswith(".pdf") or f.endswith(".txt") or f.endswith(".doc") or f.endswith(".html")]:
             # we don't want pdfs from Delaware AND we don't want it if we've already processed it
             # if (not bool("/de/" in filename)) and (os.path.splitext(os.path.basename(filename))[0] not in finished_files):
-            if (not bool("/de/" in filename)) and (any(substring in filename for substring in immigrant_states)):
+            if (not bool("/de/" in filename)) and (any(substring in filename for substring in immigrant_states) or "missing_legislators" in filename):
                 all_files.append(os.path.join(dirpath, filename))
 
     # remove the first N files that have already been processed
